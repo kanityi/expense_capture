@@ -13,6 +13,10 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  edge_detection: ^1.0.9
+  google_mlkit_text_recognition: ^0.4.0
+  hooks_riverpod: ^1.0.4
+  flutter_hooks: ^0.18.5+1
 
 dev_dependencies:
   flutter_test:
