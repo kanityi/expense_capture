@@ -9,14 +9,14 @@ final googleMLserviceProvider =
     Provider<GoogleMLServisceBase>((ref) => GoogleMLService());
 
 abstract class GoogleMLServisceBase {
-  Future<String> recogniseText(InputImage inputImage);
+  Future<String> recogniseText(File imageFile);
 }
 
 class GoogleMLService implements GoogleMLServisceBase {
   @override
-  Future<String> recogniseText(InputImage inputImage) async {
+  Future<String> recogniseText(File imageFile) async {
     try {
-      //final inputImage = InputImage.fromFile(imageFile);
+      final inputImage = InputImage.fromFile(imageFile);
       final textRecognizer =
           TextRecognizer(script: TextRecognitionScript.latin);
       final recognizedText = await textRecognizer.processImage(inputImage);
