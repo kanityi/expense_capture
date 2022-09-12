@@ -5,5 +5,5 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final textFromImageProvider =
     FutureProvider.family<String, File>((ref, imageFile) async {
-  return ref.read(googleMLserviceProvider).recogniseText(imageFile);
+  return await ref.read(googleMLserviceProvider).recogniseText(imageFile);
 });

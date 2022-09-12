@@ -57,15 +57,16 @@ class ImagePickerPage extends HookConsumerWidget {
   }
 
   Future scanText(BuildContext context, WidgetRef ref) async {
-    final textProvider = ref.read(textFromImageProvider(image.value));
-    showDialog(
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-      context: context,
-    );
+    final textProvider =
+        await ref.read(textFromImageProvider(image.value).future);
+    // showDialog(
+    //   builder: (context) => const Center(
+    //     child: CircularProgressIndicator(),
+    //   ),
+    //   context: context,
+    // );
 
-    textProvider.whenData((value) => {text.value = value});
+    text.value = textProvider;
   }
 
   void clear() {
