@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
@@ -27,31 +26,13 @@ class GoogleMLService implements GoogleMLServisceBase {
       }
 
       String results = '';
-
-      for (TextBlock block in recognizedText.blocks) {
-        final List<Point<int>> cornerPoints = block.cornerPoints;
-        if (kDebugMode) {
-          print('cornerPoints from the picture: $cornerPoints');
-        }
-        final String text = block.text;
-        if (kDebugMode) {
-          print('text from the picture: $text');
-        }
-        final List<String> languages = block.recognizedLanguages;
-        if (kDebugMode) {
-          print('lamguages from the picture: $languages');
-        }
-        for (TextLine line in block.lines) {
-          // Same getters as TextBlock
-          for (TextElement word in line.elements) {
-            results += word.text;
-            // Same getters as TextBlock
-            if (kDebugMode) {
-              print('element from the picture: ${word.text}');
-            }
+      for (var block in recognizedText.blocks) {
+        for (var line in block.lines) {
+          results += '${line.text}\n';
+          if (kDebugMode) {
+            print(line.text);
           }
         }
-        results = '$results\n';
       }
 
       return results;
