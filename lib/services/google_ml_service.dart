@@ -11,6 +11,13 @@ abstract class GoogleMLServisceBase {
   Future<String> recogniseText(File imageFile);
 }
 
+class SlipItem {
+  final String text;
+  final double bottom;
+
+  SlipItem(this.text, this.bottom);
+}
+
 class GoogleMLService implements GoogleMLServisceBase {
   @override
   Future<String> recogniseText(File imageFile) async {
@@ -20,21 +27,31 @@ class GoogleMLService implements GoogleMLServisceBase {
           TextRecognizer(script: TextRecognitionScript.latin);
       final recognizedText = await textRecognizer.processImage(inputImage);
 
-      String text = recognizedText.text;
-      if (kDebugMode) {
-        print('whole text from the picture: $text');
-      }
-
-      String results = '';
+      final slipItems = List<SlipItem>.empty(growable: true);
       for (var block in recognizedText.blocks) {
         for (var line in block.lines) {
-          results += '${line.text}\n';
-          if (kDebugMode) {
-            print(line.text);
+          if (slipItems
+              .any((element) => element.bottom == line.boundingBox.bottom)) {
+            var item = slipItems.singleWhere(
+                (element) => element.bottom == line.boundingBox.bottom);
+            var updatedItem =
+                SlipItem('${item.text} ${line.text}', item.bottom);
+            slipItems.removeWhere(
+                (element) => element.bottom == line.boundingBox.bottom);
+            slipItems.add(updatedItem);
+          } else {
+            slipItems.add(SlipItem(line.text, line.boundingBox.bottom));
           }
         }
       }
 
+      String results = '';
+      for (var item in slipItems) {
+        if (kDebugMode) {
+          print('${item.text} BOTTOM_POSITION: ${item.bottom}');
+        }
+        results += '${item.text} BOTTOM_POSITION: ${item.bottom}\n';
+      }
       return results;
     } on Exception catch (e) {
       if (kDebugMode) {

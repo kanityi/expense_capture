@@ -15,7 +15,7 @@ class TextAreaWidget extends StatelessWidget {
         children: [
           Expanded(
             child: Container(
-              height: 100,
+              height: 300,
               decoration: BoxDecoration(border: Border.all()),
               padding: const EdgeInsets.all(8),
               alignment: Alignment.center,
