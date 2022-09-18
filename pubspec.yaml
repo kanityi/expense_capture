@@ -9,7 +9,6 @@ environment:
   sdk: ">=2.18.0 <3.0.0"
 
 dependencies:
-  camera: ^0.10.0+1
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
